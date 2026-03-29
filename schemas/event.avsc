@@ -1,0 +1,184 @@
+{
+  "type": "record",
+  "name": "Event",
+  "namespace": "com.eventbooking",
+  "fields": [
+    {
+      "name": "eventId",
+      "type": "string"
+    },
+    {
+      "name": "eventType",
+      "type": {
+        "type": "enum",
+        "name": "EventType",
+        "symbols": [
+          "BookingCreated",
+          "BookingConfirmed",
+          "BookingCancelled",
+          "BookingPaid",
+          "PaymentProcessed",
+          "RefundIssued",
+          "TicketSold",
+          "SeatReleased",
+          "EventCreated",
+          "EventCancelled",
+          "EventSoldOut",
+          "UserRegistered",
+          "UserUpgraded",
+          "ReviewSubmitted"
+        ]
+      }
+    },
+    {
+      "name": "entityId",
+      "type": "string"
+    },
+    {
+      "name": "timestamp",
+      "type": {
+        "type": "long",
+        "logicalType": "timestamp-millis"
+      }
+    },
+    {
+      "name": "source",
+      "type": {
+        "type": "enum",
+        "name": "Source",
+        "symbols": [
+          "API",
+          "WEB",
+          "MOBILE",
+          "ADMIN",
+          "SCHEDULER"
+        ]
+      }
+    },
+    {
+      "name": "payload",
+      "type": {
+        "type": "record",
+        "name": "Payload",
+        "fields": [
+          {
+            "name": "userId",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "eventId",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "bookingId",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "seatIds",
+            "type": {
+              "type": "array",
+              "items": "string"
+            },
+            "default": []
+          },
+          {
+            "name": "ticketType",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "quantity",
+            "type": ["null", "int"],
+            "default": null
+          },
+          {
+            "name": "totalAmount",
+            "type": ["null", "double"],
+            "default": null
+          },
+          {
+            "name": "currency",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "paymentMethod",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "transactionId",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "eventTitle",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "eventDate",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "venueId",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "venueName",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "category",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "rating",
+            "type": ["null", "int"],
+            "default": null
+          },
+          {
+            "name": "comment",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "reason",
+            "type": ["null", "string"],
+            "default": null
+          },
+          {
+            "name": "metadata",
+            "type": {
+              "type": "map",
+              "values": "string"
+            },
+            "default": {}
+          }
+        ]
+      }
+    },
+    {
+      "name": "version",
+      "type": "int",
+      "default": 1
+    },
+    {
+      "name": "correlationId",
+      "type": ["null", "string"],
+      "default": null
+    },
+    {
+      "name": "causationId",
+      "type": ["null", "string"],
+      "default": null
+    }
+  ]
+}

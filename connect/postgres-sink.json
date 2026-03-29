@@ -1,0 +1,27 @@
+{
+    "name": "postgres-event-sink",
+    "config": {
+        "connector.class": "io.confluent.connect.jdbc.JdbcSinkConnector",
+        "tasks.max": "1",
+        "topics": "event-transformed",
+        "connection.url": "jdbc:postgresql://postgres:5432/event_booking",
+        "connection.user": "postgres",
+        "connection.password": "postgres",
+        "auto.create": "true",
+        "auto.evolve": "true",
+        "insert.mode": "upsert",
+        "pk.fields": "original_event_id",
+        "pk.mode": "record_value",
+        "table.name.format": "kafka_${topic}",
+        "fields.whitelist": "original_event_id,event_type,entity_id,timestamp,source,booking_id,user_id,event_id,total_amount,quantity",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "true",
+        "batch.size": "100",
+        "max.retries": "3",
+        "retry.backoff.ms": "5000",
+        "errors.tolerance": "all",
+        "errors.log.enable": "true",
+        "errors.log.include.messages": "true"
+    }
+}

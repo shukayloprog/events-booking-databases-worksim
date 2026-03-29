@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: 'kafka-broker'
+    static_configs:
+      - targets: ['kafka:7071']
+        labels:
+          instance: 'kafka-broker-1'

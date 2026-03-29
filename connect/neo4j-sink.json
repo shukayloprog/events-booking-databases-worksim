@@ -1,0 +1,20 @@
+{
+    "name": "neo4j-event-sink",
+    "config": {
+        "connector.class": "streams.kafka.connect.sink.Neo4jSinkConnector",
+        "tasks.max": "1",
+        "topics": "event-transformed",
+        "neo4j.server.uri": "bolt://neo4j:7687",
+        "neo4j.authentication.type": "BASIC",
+        "neo4j.authentication.basic.username": "neo4j",
+        "neo4j.authentication.basic.password": "admin123",
+        "neo4j.encryption.enabled": "false",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "true",
+        "neo4j.topic.cypher.event-transformed": "WITH event WHERE event.event_id IS NOT NULL AND event.user_id IS NOT NULL MERGE (e:Event {id: event.event_id}) ON CREATE SET e.title = event.event_title, e.category = event.category MERGE (u:User {id: event.user_id}) ON CREATE SET u.user_id = event.user_id CREATE (u)-[:INTERACTED {type: event.event_type, booking_id: COALESCE(event.booking_id, 'N/A'), quantity: COALESCE(event.quantity, 0), amount: COALESCE(event.total_amount, 0.0), timestamp: event.timestamp}]->(e)",
+        "errors.tolerance": "all",
+        "errors.log.enable": "true",
+        "errors.log.include.messages": "true"
+    }
+}

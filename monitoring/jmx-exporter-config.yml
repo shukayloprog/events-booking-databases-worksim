@@ -1,0 +1,92 @@
+lowercaseOutputName: true
+lowercaseOutputLabelNames: true
+rules:
+  # Kafka broker metrics
+  - pattern: kafka.server<type=BrokerTopicMetrics, name=(.+), topic=(.+)><>Count
+    name: kafka_server_brokertopicmetrics_$1_total
+    labels:
+      topic: $2
+    type: COUNTER
+
+  - pattern: kafka.server<type=BrokerTopicMetrics, name=(.+)><>Count
+    name: kafka_server_brokertopicmetrics_$1_total
+    type: COUNTER
+
+  - pattern: kafka.server<type=BrokerTopicMetrics, name=(.+), topic=(.+)><>OneMinuteRate
+    name: kafka_server_brokertopicmetrics_$1_rate
+    labels:
+      topic: $2
+    type: GAUGE
+
+  - pattern: kafka.server<type=BrokerTopicMetrics, name=(.+)><>OneMinuteRate
+    name: kafka_server_brokertopicmetrics_$1_rate
+    type: GAUGE
+
+  # Request metrics
+  - pattern: kafka.network<type=RequestMetrics, name=(.+), request=(.+)><>Count
+    name: kafka_network_requestmetrics_$1_total
+    labels:
+      request: $2
+    type: COUNTER
+
+  - pattern: kafka.network<type=RequestMetrics, name=(.+), request=(.+)><>Mean
+    name: kafka_network_requestmetrics_$1_mean
+    labels:
+      request: $2
+    type: GAUGE
+
+  # Consumer group metrics
+  - pattern: kafka.server<type=group-coordinator-metrics, name=(.+)><>Value
+    name: kafka_server_group_coordinator_$1
+    type: GAUGE
+
+  # Partition metrics
+  - pattern: kafka.server<type=ReplicaManager, name=(.+)><>Value
+    name: kafka_server_replicamanager_$1
+    type: GAUGE
+
+  - pattern: kafka.server<type=ReplicaManager, name=(.+)><>Count
+    name: kafka_server_replicamanager_$1_total
+    type: COUNTER
+
+  # Log metrics
+  - pattern: kafka.log<type=LogFlushStats, name=(.+)><>Count
+    name: kafka_log_logflushstats_$1_total
+    type: COUNTER
+
+  - pattern: kafka.log<type=Log, name=Size, topic=(.+), partition=(.+)><>Value
+    name: kafka_log_size
+    labels:
+      topic: $1
+      partition: $2
+    type: GAUGE
+
+  # Controller metrics
+  - pattern: kafka.controller<type=KafkaController, name=(.+)><>Value
+    name: kafka_controller_$1
+    type: GAUGE
+
+  # JVM metrics
+  - pattern: java.lang<type=Memory><HeapMemoryUsage>used
+    name: jvm_heap_memory_used_bytes
+    type: GAUGE
+
+  - pattern: java.lang<type=Memory><HeapMemoryUsage>max
+    name: jvm_heap_memory_max_bytes
+    type: GAUGE
+
+  - pattern: java.lang<type=Threading><>ThreadCount
+    name: jvm_thread_count
+    type: GAUGE
+
+  - pattern: java.lang<type=GarbageCollector, name=(.+)><>CollectionCount
+    name: jvm_gc_collection_count
+    labels:
+      gc: $1
+    type: COUNTER
+
+  - pattern: java.lang<type=GarbageCollector, name=(.+)><>CollectionTime
+    name: jvm_gc_collection_time_ms
+    labels:
+      gc: $1
+    type: COUNTER

@@ -1,0 +1,19 @@
+{
+    "name": "mongodb-event-sink",
+    "config": {
+        "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
+        "tasks.max": "1",
+        "topics": "event-aggregated",
+        "connection.uri": "mongodb://mongodb:27017",
+        "database": "event_booking_system",
+        "collection": "aggregated_metrics",
+        "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+        "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+        "value.converter.schemas.enable": "false",
+        "document.id.strategy": "com.mongodb.kafka.connect.sink.processor.id.strategy.BsonOidStrategy",
+        "delete.on.null.values": "false",
+        "batch.size": "100",
+        "max.num.retries": "3",
+        "retries.defer.timeout.ms": "5000"
+    }
+}
